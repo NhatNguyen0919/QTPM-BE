@@ -1,5 +1,6 @@
 const express = require('express');
 require('dotenv').config()
+const cors = require('cors')
 
 const app = express()
 const port = process.env.PORT || 8888
@@ -10,6 +11,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
 dbConnect()
 initRoutes(app)
+
+const corsOptions = {
+    origin: "http://localhost:5173/",
+};
+
+app.use(cors(corsOptions));
+
 
 app.use('/', (req, res) => {
     res.send("server on !")
