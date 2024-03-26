@@ -58,9 +58,32 @@ const getById = asyncHandler(async (req, res) => {
     }
 })
 
+const findByName = asyncHandler(async (req, res) => {
+    try {
+        let resData = req.params.name
+        let data = await Restaurant.findOne({ name: resData });
+        if (data) {
+            return res.status(200).json({
+                message: data
+            });
+        }
+        else {
+            res.send({ "data": "User not found" })
+        }
+
+    } catch (error) {
+        console.log("Error : ", error)
+        return res.status(200).json({
+            errorCode: -1,
+            errorMessage: "error from server"
+        })
+    }
+})
+
 
 module.exports = {
     addNewRes,
     getNewRes,
-    getById
+    getById,
+    findByName
 }
